@@ -6,13 +6,15 @@ function Quote() {
   const [allQuotes, setAllQuotes] = useState([]);
   const [col,setCol]=useState("grey");
 
+  const url="https://type.fit/api/quotes"
 
-//  quote api   https://type.fit/api/quotes
+
+  //  quote api   https://type.fit/api/quotes
 // featch the data with axios  method_1
   // Fetch all quotes on initial render
     //  useEffect(()=>{
     //     axios
-    //     .get("https://type.fit/api/quotes")
+    //     .get(url)
     //     .then((response)=>{
     //         setAllQuotes(response.data);
     //     })
@@ -22,7 +24,7 @@ function Quote() {
 
 // fetching the data  with out axios method_2
     // useEffect(()=>{
-    // fetch("https://type.fit/api/quotes")
+    // fetch(url)
     // .then(response=>response.json())
     // .then(data=>setAllQuotes(data))
     // },[])
@@ -31,7 +33,7 @@ function Quote() {
 //feach the data through differnt way method_3
     // useEffect(() => {
     //     const requrest = new XMLHttpRequest();
-    //     requrest.open('GET', 'https://type.fit/api/quotes');
+    //     requrest.open('GET', url);
     //     requrest.onload = () => {
     //       if (requrest.status === 200) {
     //         setAllQuotes(JSON.parse(requrest.responseText));
@@ -42,13 +44,27 @@ function Quote() {
     
 
 //using the async method to feach the data method_4
+// useEffect(() => {
+//     const fetchData = async () => {
+//       const response = await fetch(url);
+//       const data = await response.json();
+//       console.log(data)
+//       setAllQuotes(data);
+//     };
+//     fetchData();
+//   }, []);
 
+
+//with error handling the method_5
 useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('https://type.fit/api/quotes');
-      const data = await response.json();
-      console.log(data)
-      setAllQuotes(data);
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        setAllQuotes(data);
+      } catch (error) {
+        console.error(error);
+      }
     };
     fetchData();
   }, []);
@@ -91,3 +107,5 @@ function getRandomColor() {
 }
 
 export default Quote;
+
+
