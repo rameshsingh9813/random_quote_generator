@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+// import axios from "axios";
 
 function Quote() {
   const [quote, setQuote] = useState({ text: "", author: "" });
@@ -7,17 +7,36 @@ function Quote() {
 
 
 //  quote api   https://type.fit/api/quotes
+// featch the data with axios
   // Fetch all quotes on initial render
-     useEffect(()=>{
-        axios
-        .get("https://type.fit/api/quotes")
-        .then((response)=>{
-            setAllQuotes(response.data);
-        })
-        .catch((error)=>console.log(error))
-        },[])
+    //  useEffect(()=>{
+    //     axios
+    //     .get("https://type.fit/api/quotes")
+    //     .then((response)=>{
+    //         setAllQuotes(response.data);
+    //     })
+    //     .catch((error)=>console.log(error))
+    //     },[])
 
-     
+
+// fetching the data  with out axios method_1
+    // useEffect(()=>{
+    // fetch("https://type.fit/api/quotes")
+    // .then(response=>response.json())
+    // .then(data=>setAllQuotes(data))
+    // },[])
+
+    useEffect(() => {
+        const requrest = new XMLHttpRequest();
+        requrest.open('GET', 'https://type.fit/api/quotes');
+        requrest.onload = () => {
+          if (requrest.status === 200) {
+            setAllQuotes(JSON.parse(requrest.responseText));
+          }
+        };
+        requrest.send();
+      }, []);
+    
    
 
   // Fetch a random quote from all quotes
